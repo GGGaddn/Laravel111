@@ -8,24 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('wb_prices', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('nmId')->nullable();            
-            $table->decimal('price')->nullable();
+            $table->date('date')->index();
+            $table->unsignedBigInteger('nm_id');
+            $table->float('price')->nullable();
             $table->integer('discount')->nullable();
-            $table->integer('promoCode')->nullable();
-            $table->date('dateFrom')->nullable();
-            $table->timestamps();
+            $table->float('promo_code')->nullable();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('wb_prices');
     }
