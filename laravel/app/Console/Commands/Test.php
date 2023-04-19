@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 
 use App\Libraries\Wildberries;
 use App\Libraries\Ozon;
+use App\Models\OzonFboList;
 use App\Models\OzonStocks;
 use App\Models\WbIncomes;
 use App\Models\WbOrders;
@@ -40,24 +41,22 @@ class Test extends Command
         $ozon = new Ozon;
         // $response = $wb->reportDetailByPeriod('01.03.2023', '15.03.2023');
         $response = $ozon->fbo_list();
-        dd($response);
+        // dd($response);
         if($response['result']) {
             $count = 0;
-            foreach($response['data']['items'] as $item) { 
-                $ozon_item = new OzonStocks();
-                if(isset($item['product_id'])) $ozon_item->product_id = $item['product_id'];                       
-                if(isset($item['offer_id'])) $ozon_item->offer_id = $item['offer_id'];   
-                if(isset($item['stocks'])) foreach($item['stocks'] as $stock) {
-                    if($stock['type'] == 'fbo') {
-                        $ozon_item->fbo_present = $stock['present'];   
-                        $ozon_item->fbo_reserved = $stock['reserved'];   
-                    }
-
-                    if($stock['type'] == 'fbs') {
-                        $ozon_item->fbs_present = $stock['present'];   
-                        $ozon_item->fbs_reserved = $stock['reserved'];   
-                    }
-                }               
+            foreach($response['data']['result'] as $item) { 
+                $ozon_item = new OzonFboList();
+                if(isset($item['order_id'])) $ozon_item->order_id = $item['order_id'];                                   
+                if(isset($item['order_number'])) $ozon_item->order_number = $item['order_number'];                                   
+                if(isset($item['posting_number'])) $ozon_item->posting_number = $item['posting_number'];                                   
+                if(isset($item['status'])) $ozon_item->status = $item['status'];                                   
+                if(isset($item['cancel_reason_id'])) $ozon_item->cancel_reason_id = $item['cancel_reason_id'];                                   
+                if(isset($item['created_at'])) $ozon_item->ozon_created_at = new Carbon($item['created_at']);                                  
+                if(isset($item['in_process_at'])) $ozon_item->ozon_in_process_at = new Carbon($item['in_process_at']);                                   
+                if(isset($item['products'])) $ozon_item->products = $item['products'];                                   
+                if(isset($item['analytics_data'])) $ozon_item->analytics_data = $item['analytics_data'];                                   
+                if(isset($item['financial_data'])) $ozon_item->financial_data = $item['financial_data'];                                   
+                if(isset($item['additional_data'])) $ozon_item->additional_data = $item['additional_data'];                                   
                 $ozon_item->save();
                 $count++;
             }

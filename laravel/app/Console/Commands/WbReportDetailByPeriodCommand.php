@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\WbReportDetailByPeriodJob;
+use App\Jobs\WbSalesReportJob;
 use Illuminate\Console\Command;
 
 class WbReportDetailByPeriodCommand extends Command
@@ -26,6 +26,6 @@ class WbReportDetailByPeriodCommand extends Command
      */
     public function handle()
     {
-        WbReportDetailByPeriodJob::dispatch($this->argument('dateFrom'));
+        WbSalesReportJob::dispatch($this->argument('dateFrom'));
     }
 }

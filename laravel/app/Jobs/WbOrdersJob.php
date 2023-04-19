@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use App\Libraries\Wildberries;
+use Illuminate\Support\Carbon;
 
 class WbOrdersJob implements ShouldQueue
 {
@@ -39,26 +40,26 @@ class WbOrdersJob implements ShouldQueue
             foreach($response['data'] as $item) { 
                 $wb_item = new WbOrders();
                 if(isset($item['date'])) $wb_item->date = $item['date'];
-                if(isset($item['lastChangeDate'])) $wb_item->lastChangeDate = $item['lastChangeDate'];
-                if(isset($item['supplierArticle'])) $wb_item->supplierArticle = $item['supplierArticle'];
-                if(isset($item['techSize'])) $wb_item->techSize = $item['techSize'];
+                if(isset($item['lastChangeDate'])) $wb_item->last_change_date = $item['lastChangeDate'];
+                if(isset($item['supplierArticle'])) $wb_item->supplier_article = $item['supplierArticle'];
+                if(isset($item['techSize'])) $wb_item->tech_size = $item['techSize'];
                 if(isset($item['barcode'])) $wb_item->barcode = $item['barcode'];
-                if(isset($item['totalPrice'])) $wb_item->totalPrice = $item['totalPrice'];
-                if(isset($item['discountPercent'])) $wb_item->discountPercent = $item['discountPercent'];
-                if(isset($item['warehouseName'])) $wb_item->warehouseName = $item['warehouseName'];
+                if(isset($item['totalPrice'])) $wb_item->total_price = $item['totalPrice'];
+                if(isset($item['discountPercent'])) $wb_item->discount_percent = $item['discountPercent'];
+                if(isset($item['warehouseName'])) $wb_item->warehouse_name = $item['warehouseName'];
                 if(isset($item['oblast'])) $wb_item->oblast = $item['oblast'];
-                if(isset($item['incomeID'])) $wb_item->incomeID = $item['incomeID'];
+                if(isset($item['incomeID'])) $wb_item->income_id = $item['incomeID'];
                 if(isset($item['odid'])) $wb_item->odid = $item['odid'];
-                if(isset($item['nmId'])) $wb_item->nmId = $item['nmId'];
+                if(isset($item['nmId'])) $wb_item->nm_id = $item['nmId'];
                 if(isset($item['subject'])) $wb_item->subject = $item['subject'];
                 if(isset($item['category'])) $wb_item->category = $item['category'];
                 if(isset($item['brand'])) $wb_item->brand = $item['brand'];
                 if(isset($item['isCancel'])) {
-                    $wb_item->isCancel = $item['isCancel'];
-                    if(isset($item['cancel_dt']) && $item['isCancel']) $wb_item->cancel_dt = $item['cancel_dt'];
-                }
+                    $wb_item->is_cancel = $item['isCancel'];
+                    $wb_item->cancel_dt = new Carbon($item['cancel_dt']);
+                } 
                 
-                if(isset($item['gNumber'])) $wb_item->gNumber = $item['gNumber'];
+                if(isset($item['gNumber'])) $wb_item->g_number = $item['gNumber'];
                 if(isset($item['sticker'])) $wb_item->sticker = $item['sticker'];
                 if(isset($item['srid'])) $wb_item->srid = $item['srid'];
                 $wb_item->save();

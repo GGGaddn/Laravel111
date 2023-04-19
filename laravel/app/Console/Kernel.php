@@ -13,13 +13,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('wb:incomes')->dailyAt('23:00');
-        $schedule->command('wb:orders')->dailyAt('23:01');
-        $schedule->command('wb:prices')->dailyAt('23:02');
-        $schedule->command('wb:report')->dailyAt('23:03');
-        $schedule->command('wb:sales')->dailyAt('23:04');
-        $schedule->command('wb:stocks')->dailyAt('23:04');
-        $schedule->command('ozon:fbo')->dailyAt('23:05');
-        $schedule->command('ozon:stocks')->dailyAt('23:06');
+        $schedule->command('wb:orders')->dailyAt('23:00');
+        $schedule->command('wb:prices')->dailyAt('23:00');        
+        $schedule->command('wb:sales')->dailyAt('23:00');
+        $schedule->command('wb:stocks')->dailyAt('23:00');
+        $schedule->command('ozon:fbo')->dailyAt('23:00');
+        $schedule->command('ozon:fbs')->dailyAt('23:00');
+
+        $schedule->command('wb:report')->dailyAt('23:02');
+        $schedule->command('ozon:stocks')->dailyAt('23:05');
     }
 
     /**

@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('region_name', 200);
             $table->unsignedBigInteger('income_id');
             $table->string('sale_id', 15)->unique();
-            $table->string('sale_id_status');
+            $table->string('sale_id_status')->nullable(); //TODO: Выяснить что за поле, откуда его брать
             $table->unsignedBigInteger('odid');
             $table->float('spp');
             $table->float('for_pay');

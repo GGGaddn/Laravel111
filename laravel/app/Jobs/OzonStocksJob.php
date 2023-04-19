@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Libraries\Ozon;
 use App\Models\OzonStocks;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class OzonStocksJob implements ShouldQueue
@@ -33,11 +34,12 @@ class OzonStocksJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $response = $this->ozon->stocks();
+        $response = $this->ozon->stocks($this->last_id);
         if($response['result']) {
             $count = 0;
             foreach($response['data']['result']['items'] as $item) { 
                 $ozon_item = new OzonStocks();
+                $ozon_item->date = Carbon::now();
                 if(isset($item['product_id'])) $ozon_item->product_id = $item['product_id'];                       
                 if(isset($item['offer_id'])) $ozon_item->offer_id = $item['offer_id'];   
                 if(isset($item['stocks'])) foreach($item['stocks'] as $stock) {

@@ -39,18 +39,18 @@ class WbIncomesJob implements ShouldQueue
             $count = 0;
             foreach($response['data'] as $item) { 
                 $wb_item = new WbIncomes;
-                if(isset($item['incomeId'])) $wb_item->incomeId = $item['incomeId'];
+                if(isset($item['incomeId'])) $wb_item->income_id = $item['incomeId'];
                 if(isset($item['number'])) $wb_item->number = $item['number'];
                 if(isset($item['date'])) $wb_item->date = $item['date'];
-                if(isset($item['lastChangeDate'])) $wb_item->lastChangeDate = $item['lastChangeDate'];
-                if(isset($item['supplierArticle'])) $wb_item->supplierArticle = $item['supplierArticle'];
-                if(isset($item['techSize'])) $wb_item->techSize = $item['techSize'];
+                if(isset($item['lastChangeDate'])) $wb_item->last_change_date = $item['lastChangeDate'];
+                if(isset($item['supplierArticle'])) $wb_item->supplier_article = $item['supplierArticle'];
+                if(isset($item['techSize'])) $wb_item->tech_size = $item['techSize'];
                 if(isset($item['barcode'])) $wb_item->barcode = $item['barcode'];
                 if(isset($item['quantity'])) $wb_item->quantity = $item['quantity'];
-                if(isset($item['totalPrice'])) $wb_item->totalPrice = $item['totalPrice'];
-                if(isset($item['dateClose'])) $wb_item->dateClose = $item['dateClose'];
-                if(isset($item['warehouseName'])) $wb_item->warehouseName = $item['warehouseName'];
-                if(isset($item['nmId'])) $wb_item->nmId = $item['nmId'];
+                if(isset($item['totalPrice'])) $wb_item->total_price = $item['totalPrice'];
+                if(isset($item['dateClose'])) $wb_item->date_close = $item['dateClose'];
+                if(isset($item['warehouseName'])) $wb_item->warehouse_name = $item['warehouseName'];
+                if(isset($item['nmId'])) $wb_item->nm_id = $item['nmId'];
                 if(isset($item['status'])) $wb_item->status = $item['status'];
                 $wb_item->save();
                 $count++;

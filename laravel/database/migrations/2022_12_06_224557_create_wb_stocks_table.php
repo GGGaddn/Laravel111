@@ -24,11 +24,11 @@ return new class extends Migration
             $table->boolean('is_supply');
             $table->boolean('is_realization');
             $table->integer('quantity_full');
-            $table->integer('quantity_not_in_orders');
-            $table->unsignedBigInteger('warehouse');
+            $table->integer('quantity_not_in_orders')->nullable(); //TODO: Выяснить что за поле, откуда его брать
+            $table->unsignedBigInteger('warehouse')->nullable(); //TODO: Выяснить что за поле, откуда его брать
             $table->string('warehouse_name', 50);
-            $table->integer('in_way_to_client');
-            $table->integer('in_way_from_client');
+            $table->integer('in_way_to_client')->nullable();; //TODO: Выяснить что за поле, откуда его брать
+            $table->integer('in_way_from_client')->nullable();; //TODO: Выяснить что за поле, откуда его брать
             $table->unsignedBigInteger('nm_id');
             $table->string('subject', 50);
             $table->string('category', 50);

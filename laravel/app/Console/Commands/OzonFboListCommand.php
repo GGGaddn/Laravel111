@@ -19,7 +19,7 @@ class OzonFboListCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Ozon - Список отправлений';
+    protected $description = 'Ozon - Список отправлений ФБО';
 
     /**
      * Execute the console command.

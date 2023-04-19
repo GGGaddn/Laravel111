@@ -3,6 +3,7 @@ namespace App\Libraries;
 
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use PhpParser\Node\Expr\Cast\String_;
 
 class Ozon
 {    
@@ -71,19 +72,47 @@ class Ozon
     }
     
     /**
-     * Список отправлений
+     * Список отправлений ФБО
      *
      * @param  String|null $dateFrom Начало периода в формате ДД.ММ.ГГГГ
      * @return mixed
      */
     public function fbo_list(?String $dateFrom = null) {
-        $dateFrom = !$dateFrom ? Carbon::now() : new Carbon($dateFrom);
+        $dateFrom = !$dateFrom ? Carbon::now()->subDay() : new Carbon($dateFrom);
         
         return $this->makeRequest('v2/posting/fbo/list', [
             'filter' => [
-                'since' => $dateFrom->format('Y-m-d')
+                'since' => $dateFrom->toIso8601String()
             ],
-            'limit' => 1000
+            'limit' => 1000,
+            'with' => [
+                'analytics_data' => true,
+                'financial_data' => true
+            ],
+        ]);
+    }
+    
+    /**
+     * Список отправлений ФБС
+     *
+     * @param  String|null $dateFrom Начало периода в формате ДД.ММ.ГГГГ
+     * @param  String|null $dateTo Конец периода в формате ДД.ММ.ГГГГ
+     * @return mixed
+     */
+    public function fbs_list(?String $dateFrom = null, ?String $dateTo = null) {
+        $dateFrom = !$dateFrom ? Carbon::now()->subDay() : new Carbon($dateFrom);
+        $dateTo = !$dateTo ? Carbon::now() : new Carbon($dateTo);
+        
+        return $this->makeRequest('v3/posting/fbs/list', [
+            'filter' => [
+                'since' => $dateFrom->toIso8601ZuluString('millisecond'),
+                'to' => $dateTo->toIso8601ZuluString('millisecond'),
+            ],
+            'limit' => 1000,
+            'with' => [
+                'analytics_data' => true,
+                'financial_data' => true
+            ],
         ]);
     }
    

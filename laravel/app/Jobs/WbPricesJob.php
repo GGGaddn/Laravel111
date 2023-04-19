@@ -39,11 +39,11 @@ class WbPricesJob implements ShouldQueue
             $count = 0;
             foreach($response['data'] as $item) { 
                 $wb_item = new WbPrices();
-                if(isset($item['nmId'])) $wb_item->nmId = $item['nmId'];
+                if(isset($item['nmId'])) $wb_item->nm_id = $item['nmId'];
                 if(isset($item['price'])) $wb_item->price = $item['price'];
                 if(isset($item['discount'])) $wb_item->discount = $item['discount'];
-                if(isset($item['promoCode'])) $wb_item->promoCode = $item['promoCode'];
-                $wb_item->dateFrom = new Carbon($this->dateFrom);
+                if(isset($item['promoCode'])) $wb_item->promo_code = $item['promoCode'];
+                $wb_item->date = new Carbon($this->dateFrom);
                 $wb_item->save();
                 $count++;
             }
